@@ -74,3 +74,20 @@ logarithms ~ O(log n) 및 O(nlog n)
     n이 무한대를 기준으로, 단순화해서 활용 (추세)
     이는 하드웨어가 아닌 알고리즘 자체로만 효율성 계산하는 것!
 */
+
+
+/*
+2. bigO를 통해 본 array object
+
+- object: 정렬되지 않은 k,v 쌍 값
+    순서가 필요 없고 / 빠른 접근과 삭제, 삽입 등이 필요한 경우 활용
+        ( insertion O(1)  /  removal O(1)  /  searching O(1)  /  access O(1) )
+    메서드별 bigO 평가 - Object.keys O(n)  /  Object.values O(n)  /  Object.entires O(n)  /  Object.hasOwnProperty O(1)
+
+- array: 정렬된 리스트
+    순서가 필요하고 / 빠른 접근 삽입 삭제.. 이 필요한 경우
+        ( insertion 상황에 따라..  /  removal 상황에 따라..  /  searching O(N)  /  access O(1) )
+        ~ 뒷순서일수록 O(1)에 수렴 / 첫순서일수록 O(n) ~ reindexing..
+    메서드별 bigO 평가 - array.push O(1)  /  array.pop O(1)  <  array.shift O(n)  /  array.unshift O(n)
+        array.concat/slice/splice/forEach/map/reduce/filter... O(n)  /  array.sort O(n * log n)
+*/
