@@ -34,41 +34,39 @@ const roadType = {
     // 다녀간 곳은 -1 부터 -n까지
 }
 
-function stackMaze(maze) {
+function queueMaze(maze) {
     const mazeEnd = [ maze.length - 1, maze[0].length - 1 ];
+    console.log(mazeEnd)
     const pathQueue = [ [0,0] ]; // 입구 시작
     maze[0][0] = -1; // 온 곳 체크
 
-    while(1) {
-        let noWay = true;
-        if ( current[0] === mazeEnd[0] && current[1] === mazeEnd[1] ) { // 도착 했으면 리턴
+    // queue가 비어 있으면 루프 종료
+    while(pathQueue.length) {
+        // 현재 위치
+        let current = pathQueue.shift();
+        // 도착 했으면 리턴
+        if ( current[0] === mazeEnd[0] && current[1] === mazeEnd[1] ) {
             console.log('found destination');
             break;
         }
-        // 현재 위치
-        let current = pathQueue.shift();
         // 길 찾기 작업
         for(let i = 0; i < 4; i++) {
             if(goPossible(current, i)) { // 갈 수 있으면
                 const newCurrent = move(current, i); // 이동하고 (cur 변화) 기존 길 표시
                 pathQueue.push(newCurrent); // 갈 수 있는 길 enqueue
-                noWay = false;
                 console.log('go', newCurrent)
                 console.log(pathQueue)
                 console.log(JSON.stringify(maze));
                 // break; ~ 갈 수 있는 곳은 전부 queue에 넣고 종료한다.
             }
         }
-        if ( noWay ) {
-            console.log('no destination');
-            break;
-        }
     }
     console.log('finish')
+    console.log(JSON.stringify(maze));
     function goPossible(currentPoint, dir) {
         const movedX = currentPoint[0] + DIRECTION[dir].point[0];
         const movedY = currentPoint[1] + DIRECTION[dir].point[1];
-        if ( movedX < 0 || movedX >= maze.length - 1 || movedY < 0 || movedY >= maze[0].length - 1 ) { // 미로 밖
+        if ( movedX < 0 || movedX >= maze.length || movedY < 0 || movedY >= maze[0].length ) { // 미로 밖
             return false;
         }
         if (maze[ movedX ][ movedY ] === 0) { // path
@@ -87,7 +85,7 @@ function stackMaze(maze) {
 }
 
 console.log(
-    stackMaze([
+    queueMaze([
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
         [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
