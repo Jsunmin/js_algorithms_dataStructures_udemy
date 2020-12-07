@@ -1,5 +1,5 @@
 // js sort
-console.log(['가나다', '나다라', '1마바', '마바1', '사하', 'ㅁㅁㅁ', 'ㅃㅂ', 'AAA', 'aaa'].sort());
+console.log(['가나다', '나다라', '1마바', '마바1', '사하', 'ㅁㅁㅁ', 'ㅃㅂ', 'AAA', 'aaa', 'a11', 'a10', 'a12'].sort());
 // built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values
 // 앞자리, 10 1 이 우선시됨 -> 이 경우 compareFunction 을 써야함.
 console.log([10, 15, 4, 6, 1].sort((a, b) => a - b));
@@ -8,7 +8,7 @@ function bubleSort(arr) {
     let iter = arr.length;
     while (iter > 1) { // time O( n^2 )
         let noSwap = true;
-        for (let i = 1; i < iter; i++) {
+        for (let i = 1; i < iter; i++) { // 마지막에 가장 큰수를 둘때까지 swap
             if ( arr[i-1] > arr[i]  ) {
                 let temp = arr[i-1];
                 arr[i-1] = arr[i];
@@ -59,9 +59,9 @@ function insertionSort(arr) {
         let stopIndex = i;
         for (let j = i - 1; j >= 0 && arr[j] > currentVal; j-- ) {
             stopIndex = j;
-            arr[j+1] = arr[j];
+            arr[j+1] = arr[j]; // 해당 원소를 뒤로 미루고.
         }
-        arr[stopIndex] = currentVal;
+        arr[stopIndex] = currentVal; // 미룬 원소의 위치에 삽입
     }
     return arr;
 }
