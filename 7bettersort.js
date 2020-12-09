@@ -122,3 +122,76 @@ console.log(
     // pivot([9,4,11,16,1,41,40,14,36,37,42,18]),
     quickSort([4,6,9,1,2,5,3]),
 )
+
+
+/*
+라딕스 소트: 숫자 전체에 대한 비교가 아닌, 숫자의 인코딩된 자릿수로 비교 (자릿수가 많으면 더 큰 숫자!)
+    0~9까지 queue 를 두고, 모든 데이터에 대해 가장 낮은 자릿수를 비교해 해당하는 queue에 넣음
+    0부터 차례대로 다시 데이터를 가져옴 (from queue)
+    자릿수 올려가며 해당 과정 반복.
+
+pseudo
+<라딕스 헬퍼 함수>
+1, 숫자와 비교 자릿수(2인자)를 받는 함수 ~ 숫자의 해당 자릿수 숫자를 리턴
+2, 숫자(1인자)를 받는 함수 ~ 특정 수의 자릿수를 리턴
+3, 숫자 배열을 받는 함수 ~ 가장 큰 수의 자릿수 리턴
+
+<정렬 로직>
+0, 숫자중 가장 큰 자릿수 파악.
+1, 0 ~ 큰 자릿수 루프 생성(i)
+    a, 각 숫자(0-9)에 대한 큐  생성
+    b, i번째 자리 기준으로 맞는 큐에 enqueue
+2, 기존 배열을 0~9 큐에서 하나씩 뺀 값으로 재정렬
+3, 배열 반환
+
+
+*/
+function getDigit(num, place) {
+    // 음수 처리 & 1의자릿수를 타겟으로 남기고, 10으로 나눠 앞자리 걷어냄
+    return Math.floor( Math.abs(num) / (10 ** place) ) % 10;
+}
+function digitCount(num) {
+    // 음수 처리 & 10으로 지수 구하고 해당 소수 결과에 + 1
+    return Math.floor( Math.log10( Math.abs(num) ) + 1 );
+}
+function mostDigits(arr) {
+    let most = 0;
+    // 숫자를 돌면서 가장 큰 자릿수 리턴
+    for ( let i = 0; i < arr.length; i++ ) {
+        most = Math.max( digitCount(arr[i]), most );
+    }
+    return most;
+}
+function readixSort(arr) {
+    const maxDigit = mostDigits(arr);
+    for(let digit = 0; digit < maxDigit; digit++) {
+        // 0 - 9 까지 큐 생성
+        // const digitQueues = Array.from({length: 10}, () => []); // 훨씬 보기 좋다..
+        const digitQueues = new Array(10);
+        // 숫자 정렬
+        for(let i = 0; i < arr.length; i++) {
+            const targetPlace = getDigit(arr[i], digit);
+            if ( !digitQueues[targetPlace] ) {
+                digitQueues[targetPlace] = [];
+            }
+            digitQueues[targetPlace].push(arr[i]);
+        }
+        // 큐 결과 반영
+        // arr = [].concat(...digitQueues); // 훨씬 보기 좋다..
+        arr = digitQueues.reduce( (result, v) => {
+            // undefined 존재 가능
+            if (v) {
+                // 0 -> 9 까지 차례대로 반영 (enqueue)
+                result.push(...v);
+            }
+            return result;
+        }, []);
+    }
+    return arr;
+}
+console.log(
+    readixSort([1234, 56, 7]),
+    readixSort([1,1, 11111, 1]),
+    readixSort([12, 34, 56, 78]),
+
+)
