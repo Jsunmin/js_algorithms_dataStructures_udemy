@@ -1,8 +1,11 @@
 /* 
 hashTable: key/value 쌍을 저장하는데 사용
 
-    삽입 - O(log N)
-    서칭 - O(log N)
+    삽입 - O(1)
+    삭제 - O(1)
+    접근 - O(1)
+    서칭 - O(1)
+      - not guaranteed! ~ 충돌이 잦아 하나의 인덱스(해시키)에 데이터 몰아진 경우.. O(N)..
 
     대부분의 언어에 이미 구현되어 있음 (dictionary, object, maps, hashes..)
 
@@ -58,6 +61,32 @@ class hashTable {
             return answer;
         }
     }
+    keys() {
+        // return all keys ht have
+        let keys = [];
+        for (let i = 0; i < this.keyMap.length; i++) {
+            if ( this.keyMap[i] ) {
+                this.keyMap[i].find( data => {
+                    const [ k, _ ] = data;
+                    keys.push(k);
+                });
+            }
+        }
+        console.log(keys);
+    }
+    values() {
+        // return all values ht have
+        let values = [];
+        for (let i = 0; i < this.keyMap.length; i++) {
+            if ( this.keyMap[i] ) {
+                this.keyMap[i].find( data => {
+                    const [ _, v ] = data;
+                    values.push(v);
+                });
+            }
+        }
+        console.log(values);
+    }
 }
 
 const ht = new hashTable(17);
@@ -67,8 +96,10 @@ ht.set("hello b", "good b");
 ht.set("hello c", "good c");
 ht.set("hi world", "good aa");
 console.log(ht.keyMap)
-console.log(ht.get("hello world"));
-console.log(ht.get("hello a"));
-console.log(ht.get("hello b"));
-console.log(ht.get("hello c"));
-console.log(ht.get("hi world"));
+// console.log(ht.get("hello world"));
+// console.log(ht.get("hello a"));
+// console.log(ht.get("hello b"));
+// console.log(ht.get("hello c"));
+// console.log(ht.get("hi world"));
+console.log(ht.keys());
+console.log(ht.values());
