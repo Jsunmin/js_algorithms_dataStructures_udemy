@@ -18,7 +18,7 @@ function isUnique(str) {
     /* 시간 / 공간 복잡도 분산
     // time: O(n * log(n))
     // space: O(n)
-    // sorting 알고리즘마다 다르지만, 보통 log(n) 의 복잡도를 지님.
+    // sorting 알고리즘마다 다르지만, 보통 n*log(n) 의 복잡도를 지님.
     const chars = str.split('').sort(); // time: O(n * log(n)) / space: O(n)
     for (let i = 1; i < str.length; i++) { // O(n)
         // 직전 원소와 비교해서 판단
