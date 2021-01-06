@@ -48,6 +48,7 @@ class WeightedGraph {
                 // 끝
                 console.log(distance);
                 console.log(previous);
+                // 직전 노드를 탐색하면서, 경로 역추적
                 while(previous[smallest]) {
                     answer.push(smallest);
                     smallest = previous[smallest];
