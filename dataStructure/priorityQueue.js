@@ -15,7 +15,7 @@ class Node {
     }
 }
 
-class priorityQueue {
+class PriorityQueue {
     constructor() {
         this.values = [];
     }
@@ -69,6 +69,9 @@ class priorityQueue {
     dequeue() {
         const max = this.values[0];
         const end = this.values.pop();
+        if ( max === end ) {
+            return end;
+        }
         this.values[0]= end;
         // 마지막꺼 스왑한 결과 조정
         this.bubbleDown();
@@ -77,15 +80,17 @@ class priorityQueue {
 }
 
 
-const ER = new priorityQueue();
-ER.enqueue("common cold", 5);
-ER.enqueue("gunshot wound", 1);
-ER.enqueue("high fever", 4);
-ER.enqueue("broken arm", 2);
-ER.enqueue("glass in foot", 3);
-ER.enqueue("glass in foot", 3.5);
+// const ER = new PriorityQueue();
+// ER.enqueue("common cold", 5);
+// ER.enqueue("gunshot wound", 1);
+// ER.enqueue("high fever", 4);
+// ER.enqueue("broken arm", 2);
+// ER.enqueue("glass in foot", 3);
+// ER.enqueue("glass in foot", 3.5);
 
-console.log('check1', ER.values)
+// console.log('check1', ER.values)
 
 
-console.log('check2', ER.values)
+// console.log('check2', ER.values)
+
+module.exports = PriorityQueue;
